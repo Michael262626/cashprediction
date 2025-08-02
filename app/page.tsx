@@ -269,7 +269,7 @@ export default function ATMCashPredictionSystem() {
               <DollarSign className="h-5 w-5 text-blue-200" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">${totalCash.toLocaleString()}</div>
+              <div className="text-3xl font-bold">₦{totalCash.toLocaleString()}</div>
               <p className="text-xs text-blue-200 mt-1">Across {atmData.length} ATMs</p>
             </CardContent>
           </Card>
@@ -291,7 +291,7 @@ export default function ATMCashPredictionSystem() {
               <TrendingUp className="h-5 w-5 text-emerald-200" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">${Math.round(avgDailyWithdrawal).toLocaleString()}</div>
+              <div className="text-3xl font-bold">₦{Math.round(avgDailyWithdrawal).toLocaleString()}</div>
               <p className="text-xs text-emerald-200 mt-1">Per ATM withdrawal</p>
             </CardContent>
           </Card>
