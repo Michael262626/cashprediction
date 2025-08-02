@@ -83,7 +83,7 @@ export function AuthForm({ onLogin }: AuthFormProps) {
             <Building className="h-8 w-8 text-white" />
           </div>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-            ATM Cash Prediction
+            CASHVIEW
           </h1>
           <p className="text-slate-600">Secure access to your banking operations</p>
         </div>

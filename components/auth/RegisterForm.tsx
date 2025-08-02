@@ -62,7 +62,7 @@ export function RegisterForm() {
           <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
             Create an Account
           </h1>
-          <p className="text-slate-600">Sign up to access the ATM management system</p>
+          <p className="text-slate-600">Sign up to access CASHVIEW</p>
         </div>
 
         <Card className="border-0 shadow-xl bg-white">
