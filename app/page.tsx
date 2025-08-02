@@ -185,7 +185,7 @@ export default function ATMCashPredictionSystem() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-                  ATM Cash Prediction System
+                CASHVIEW
                 </h1>
                 <p className="text-slate-600">AI-Powered Cash Management & Forecasting</p>
               </div>
