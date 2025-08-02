@@ -233,20 +233,24 @@ class ATMApi {
     return await response.json()
   }
 
-  async generatePrediction(currentDate: string, days: number): Promise<PredictionResponse> {
+  async generatePrediction(payload: {
+    atmId: string
+    days: number
+    seasonalFactor: number
+    eventFactor: number
+    eventDescription?: string
+  }): Promise<PredictionResponse> {
     return this.request<PredictionResponse>("/model/predict", {
       method: "POST",
-      body: JSON.stringify({
-        current_date: currentDate,
-        days,
-      }),
+      body: JSON.stringify(payload),
     })
   }
+  
 
   // ATM Management (Mock endpoints - you can implement these in your backend)
   async getAllATMs(): Promise<ATMData[]> {
     try {
-      return this.request<ATMData[]>("/atms")
+      return await this.request<ATMData[]>("/atms")
     } catch (error) {
       // Fallback to mock data if endpoint doesn't exist
       return [

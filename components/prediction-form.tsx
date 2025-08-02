@@ -60,9 +60,9 @@ export function PredictionForm({ atmData, setAtmData }: PredictionFormProps) {
         seasonalFactor: Number.parseFloat(seasonalFactor),
         eventFactor: Number.parseFloat(eventFactor),
         eventDescription: eventDescription || undefined,
-      })
+      });
 
-      setPredictions(response.predictions)
+      setPredictions(response.daily_predictions)
 
       toast({
         title: "Prediction Generated",
