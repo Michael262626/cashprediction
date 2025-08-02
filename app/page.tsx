@@ -13,11 +13,11 @@ import { HistoricalData } from "@/components/historical-data"
 import { PredictionForm } from "@/components/prediction-form"
 import { RefillManagement } from "@/components/refill-management"
 import { MLPrediction } from "@/components/ml-prediction"
-import { LoginForm } from "@/components/auth/login-form"
 import { LoadingSpinner } from "@/components/loading-spinner"
 import { useToast } from "@/hooks/use-toast"
 import { atmApi } from "@/lib/api"
 import { ExportService } from "@/lib/export-utils"
+import { AuthForm } from "@/components/auth/login-form"
 
 interface ATMData {
   id: string
@@ -156,7 +156,7 @@ export default function ATMCashPredictionSystem() {
 
   // Show login form if not authenticated
   if (!currentUser) {
-    return <LoginForm onLogin={handleLogin} />
+    return <AuthForm onLogin={handleLogin} />
   }
 
   if (loading) {

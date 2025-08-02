@@ -54,7 +54,7 @@ interface PredictionResponse {
 }
 
 interface User {
-  username: string
+  email: string
   role: string
   token: string
 }
@@ -100,46 +100,63 @@ class ATMApi {
   }
 
   // Authentication
-  async login(username: string, password: string): Promise<User> {
+  async login(email: string, password: string): Promise<User> {
+    const response = await fetch(`${API_BASE_URL}/token`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+  
+    if (!response.ok) {
+      throw new Error(await response.text());
+    }
+  
+    const data = await response.json();
+    this.token = data.access_token || email;
+    localStorage.setItem("auth_token", this.token!);
+  
+    return {
+      email,
+      role: "ATM Operations Staff", // update if you get role from backend
+      token: this.token!,
+    };
+  }
+  
+  async register(username: string, email: string, password: string, role: string = "ATM Operations Staff"): Promise<User> {
     try {
-      // For demo purposes, we'll use the username as token since your backend uses simple token auth
-      const response = await fetch(`${API_BASE_URL}/token`, {
+      console.log("[REGISTER] Creating user with:", { username, email, role });
+  
+      const url = `${API_BASE_URL}/users`; // Make sure backend route matches
+      const payload = { username, email, password, role };
+  
+      const response = await fetch(url, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: `username=${username}&password=${password}`,
-      })
-
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+  
+      console.log("[REGISTER] Response status:", response.status);
+  
       if (!response.ok) {
-        throw new Error("Invalid credentials")
+        const errText = await response.text();
+        console.error("[REGISTER] Server responded with error:", errText);
+        throw new Error(`Registration failed: ${errText}`);
       }
-
-      const data = await response.json()
-      this.token = data.access_token || username // Fallback to username for demo
-
-      if (typeof window !== "undefined") {
-        localStorage.setItem("auth_token", this.token!)
-      }
-
-      // Get user role from your users_db structure
-      const roleMap: { [key: string]: string } = {
-        atm_ops: "ATM Operations Staff",
-        branch_mgr: "Branch Operations Manager",
-        vault_mgr: "Vault Manager",
-        hoao: "Head Office Authorization Officer",
-      }
-
+  
+      const data = await response.json();
+      console.log("[REGISTER] User created:", data);
+  
       return {
-        username,
-        role: roleMap[username] || "Unknown",
-        token: this.token!,
-      }
+        email: data.user.username,
+        role: data.user.role,
+        token: "", // You can auto-login here by calling login() if desired
+      };
     } catch (error) {
-      console.error("Login failed:", error)
-      throw error
+      console.error("[REGISTER] Registration failed:", error);
+      throw error;
     }
   }
+  
 
   logout() {
     this.token = null
@@ -159,7 +176,7 @@ class ATMApi {
     }
 
     return {
-      username: this.token,
+      email: this.token,
       role: roleMap[this.token] || "Unknown",
       token: this.token,
     }
